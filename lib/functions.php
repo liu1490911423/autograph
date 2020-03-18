@@ -2,7 +2,7 @@
 
     function doPost($url, $data, $appID, $stoken)
     {
-        list($return_code, $return_content) = $this->http_post_data($url, $data, $appID,$stoken);
+        list($return_code, $return_content) = http_post_data($url, $data, $appID,$stoken);
         return $return_content;
     }
 
@@ -41,7 +41,7 @@
      */
     function doGet($url, $appID='', $stoken='')
     {
-        list($return_code, $return_content) = $this->curl_get_https($url,$appID, $stoken);
+        list($return_code, $return_content) = curl_get_https($url,$appID, $stoken);
         return $return_content;
     }
 
@@ -113,7 +113,7 @@
      */
     function doPut($url, $appID, $stoken)
     {
-        list($return_code, $return_content) = $this->http_put_data($url,$appID,$stoken);
+        list($return_code, $return_content) = http_put_data($url,$appID,$stoken);
         return $return_content;
     }
 
