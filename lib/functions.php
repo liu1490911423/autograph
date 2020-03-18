@@ -1,17 +1,6 @@
 <?php
-namespace Sign;
 
-
-class UntilService
-{/**
- * @param $url
- * @param $data
- * @param $appID
- * @param $appSecret
- * @return mixed
- */
-
-    public function doPost($url, $data, $appID, $stoken)
+    function doPost($url, $data, $appID, $stoken)
     {
         list($return_code, $return_content) = $this->http_post_data($url, $data, $appID,$stoken);
         return $return_content;
@@ -24,7 +13,7 @@ class UntilService
      * @param $stoken
      * @return array
      */
-    public function http_post_data($url, $data, $appID, $stoken) {
+    function http_post_data($url, $data, $appID, $stoken) {
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_POST, 1);
@@ -50,7 +39,7 @@ class UntilService
      * @param $stoken
      * @return mixed
      */
-    public function doGet($url, $appID='', $stoken='')
+    function doGet($url, $appID='', $stoken='')
     {
         list($return_code, $return_content) = $this->curl_get_https($url,$appID, $stoken);
         return $return_content;
@@ -62,7 +51,7 @@ class UntilService
      * @param string $stoken
      * @return array
      */
-    public function curl_get_https($url,$appID='', $stoken='') {
+    function curl_get_https($url,$appID='', $stoken='') {
         $ch = curl_init();
 
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -80,7 +69,7 @@ class UntilService
         return array($return_code, $return_content);
     }
 
-    public function sendHttpPUT($uploadUrls, $contentMd5, $fileContent){
+    function sendHttpPUT($uploadUrls, $contentMd5, $fileContent){
         $header = array(
             'Content-Type:application/pdf',
             'Content-Md5:' . $contentMd5
@@ -122,7 +111,7 @@ class UntilService
      * @param $stoken
      * @return mixed
      */
-    public function doPut($url, $appID, $stoken)
+    function doPut($url, $appID, $stoken)
     {
         list($return_code, $return_content) = $this->http_put_data($url,$appID,$stoken);
         return $return_content;
@@ -213,4 +202,3 @@ class UntilService
     }
 
 
-}

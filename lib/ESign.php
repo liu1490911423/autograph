@@ -48,7 +48,7 @@ class Esign
 
     function __construct() {
 
-        $this->until  = new UntilService();
+        //$this->until  = new UntilService();
 
         $this->config=[
             'appId'=>'4438793861',
@@ -107,7 +107,7 @@ class Esign
         //if((!$token)) {
             $this->config['grantType'] = 'client_credentials';
             $data = $this->fixData($this->config);
-            $return_content = $this->until->doGet($this->url.$this->Link_URL[1].$data);
+            $return_content = doGet($this->url.$this->Link_URL[1].$data);
             $result = $this->fixReturn($return_content);
             $token = $result['token'];
             //echo $token;
@@ -134,14 +134,14 @@ class Esign
         }
 
         if($method == 'put'){
-            $return_content = $this->until->doPut($url,$this->config['appId'],$stoken);
+            $return_content = doPut($url,$this->config['appId'],$stoken);
         }else if($method == 'get'){
             if($info['accountId']){
                 $url = $url.'?accountId='.$info['accountId'];
             }
-            $return_content = $this->until->doGet($url,$this->config['appId'],$stoken);
+            $return_content = doGet($url,$this->config['appId'],$stoken);
         }else{
-            $return_content = $this->until->doPost($url,$data,$this->config['appId'],$stoken);
+            $return_content = doPost($url,$data,$this->config['appId'],$stoken);
         }
         $result = $this->fixReturn($return_content);
         return $result;
@@ -214,7 +214,7 @@ class Esign
         //文件内容
         $fileContent = file_get_contents($filePath);
         $contentMd5 = $this->getContentBase64Md5($filePath);
-        $status = $this->until->sendHttpPUT($uploadUrls, $contentMd5, $fileContent);
+        $status = sendHttpPUT($uploadUrls, $contentMd5, $fileContent);
         return $status;
     }
 
@@ -228,7 +228,7 @@ class Esign
             'businessScene'=>$businessScene?$businessScene:'test',
             'autoArchive'=>true,
             'configInfo'=>array(
-                'noticeDeveloperUrl'=>C('sign_return_url')?C('sign_return_url'):'http://admin.cs.ttypapp.com/remedy-signOver?auth=Jxiaopi1907'
+                'noticeDeveloperUrl'=>'http://admin.cs.ttypapp.com/remedy-signOver?auth=Jxiaopi1907'
             )
         );
 
