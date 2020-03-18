@@ -16,7 +16,7 @@
         "psr-4": {
             "Sign\\": "lib/"
         },
-        "file": [
+        "files": [
             "lib/functions.php"
         ]
     }
