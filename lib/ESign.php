@@ -27,7 +27,6 @@ namespace Sign;
 class Esign
 {
     private $config;
-    private $until;
 
     public $url ;
 
@@ -46,16 +45,10 @@ class Esign
         12=>'/v1/signflows/{flowId}/executeUrl'//获取签署地址
     ];
 
-    function __construct() {
+    function __construct($config) {
 
-        //$this->until  = new UntilService();
-
-        $this->config=[
-            'appId'=>'4438793861',
-            'secret'=>'da3fcada0c7e5cd7eed5feb2b03b545d',
-        ];
-
-        $this->url  = 'https://smlopenapi.esign.cn';
+        $this->config= $config['config'];
+        $this->url  = $config['url'];
     }
 
     /**
