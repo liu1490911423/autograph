@@ -15,20 +15,13 @@ namespace Sign;
  * @package Common\Logic
  */
 
-//$info = array(
-//    "thirdPartyUserId"=>"2019082630134",
-//    "name"=>"lhx",
-//    "idType"=>"CRED_PSN_CH_IDCARD",
-//    "idNumber"=>"371204199604234930",
-//    "mobile"=>"18357465647",
-//    "email"=>"wuhuan@tsign.com"
-//);
-//Logic('ESign')->createByThirdPartyUserId($info);
+
 class Esign
 {
     private $config;
 
     public $url ;
+    public $back_url ;
 
     public $Link_URL=[
         1=>'/v1/oauth2/access_token?',//token获取
@@ -49,6 +42,7 @@ class Esign
 
         $this->config= $config['config'];
         $this->url  = $config['url'];
+        $this->back_url  = $config['back_url'];
     }
 
     /**
@@ -221,7 +215,7 @@ class Esign
             'businessScene'=>$businessScene?$businessScene:'test',
             'autoArchive'=>true,
             'configInfo'=>array(
-                'noticeDeveloperUrl'=>'http://admin.cs.ttypapp.com/remedy-signOver?auth=Jxiaopi1907'
+                'noticeDeveloperUrl'=>$this->back_url
             )
         );
 
@@ -259,11 +253,13 @@ class Esign
      * @param $flowId
      * @param $fileId
      * @param $sealId
+     * @param $pos
      * @return array|mixed
      * 平台签
      * 返回用户ID：accountId，文档ID：fileId
      */
-    function platformSign($flowId,$fileId,$sealId){
+
+    function platformSign($flowId,$fileId,$sealId,$pos){
         $info = array(
             'flowId'=>$flowId,
             'signfields'=>array(array(
@@ -272,9 +268,9 @@ class Esign
                 'sealId'=>$sealId,
                 'signType'=>1,
                 'posBean'=>array(
-                    'posPage'=>'3',
-                    'posX'=>'200',
-                    'posY'=>'450',))));
+                    'posPage'=>$pos['page'],
+                    'posX'=>$pos['x'],
+                    'posY'=>$pos['y'],))));
         return $this->commonRequest($info,7);
     }
 
@@ -283,11 +279,12 @@ class Esign
      * @param int $actorIndentityType
      * @param $flowId
      * @param $fileId
+     * @param $pos
      * @return array|mixed
      * 手动签
      * 返回用户ID：accountId，文档ID：fileId
      */
-    function handSign($accountId,$flowId,$fileId){
+    function handSign($accountId,$flowId,$fileId,$pos){
         $info = array(
             'flowId'=>$flowId,
             'signfields'=>array(array(
@@ -297,9 +294,9 @@ class Esign
                 'signType'=>'1',
                 'sealType'=>'0',
                 'posBean'=>array(
-                    'posPage'=>'3',
-                    'posX'=>'460',
-                    'posY'=>'450',))));
+                    'posPage'=>$pos['page'],
+                    'posX'=>$pos['x'],
+                    'posY'=>$pos['y'],))));
         return $this->commonRequest($info,8);
     }
 
