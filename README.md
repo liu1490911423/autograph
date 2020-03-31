@@ -1,6 +1,8 @@
 # autograph
 接E签宝封装
 
+composer require hong/autograph @dev
+
    use Sign\Esign;
    
    class Talk{
