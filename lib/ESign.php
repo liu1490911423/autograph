@@ -9,6 +9,8 @@
 namespace Sign;
 
 
+use Predis\Client;
+
 /**
  * 调用接口
  * Class Login
@@ -45,8 +47,8 @@ class Esign
         $this->url  = $config['url'];
         $this->back_url  = $config['back_url'];
 
-        $this->redis = new Redis();
-        $this->redis->connect($config['redis_url'],6379);
+        $this->redis = new Client($config['redis_url']);
+
     }
 
     /**
