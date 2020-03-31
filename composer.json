@@ -10,8 +10,8 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "php": ">=5.5",
-        "predis/predis": "2.0.x-dev"
+        "php": ">=5.5"
+
     },
     "autoload": {
         "psr-4": {
