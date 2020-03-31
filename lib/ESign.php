@@ -22,6 +22,7 @@ class Esign
 
     public $url ;
     public $back_url ;
+    public $redis ;
 
     public $Link_URL=[
         1=>'/v1/oauth2/access_token?',//token获取
@@ -43,6 +44,9 @@ class Esign
         $this->config= $config['config'];
         $this->url  = $config['url'];
         $this->back_url  = $config['back_url'];
+
+        $this->redis = new Redis();
+        $this->redis->connect($config['redis_url'],6379);
     }
 
     /**
@@ -89,16 +93,16 @@ class Esign
      */
     function getToken(){
 
-        //$tokenCache = new SignTokenCache();
-        //$token = $tokenCache->get(1);
-        //if((!$token)) {
+        $token = $this->redis->get("sign_token");
+        if(!$token){
             $this->config['grantType'] = 'client_credentials';
             $data = $this->fixData($this->config);
             $return_content = doGet($this->url.$this->Link_URL[1].$data);
             $result = $this->fixReturn($return_content);
             $token = $result['token'];
-            //echo $token;
-        //}
+            $this->redis->set("sign_token",$token);
+            $this->redis->expireAt("sign_token",2*60*60);
+        }
         return $token;
 
     }
